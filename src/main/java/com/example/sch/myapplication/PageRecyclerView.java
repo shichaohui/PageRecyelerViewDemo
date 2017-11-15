@@ -44,6 +44,8 @@ public class PageRecyclerView extends RecyclerView {
 	 */
     private int scrollState = 0; // 滚动状态
 
+    private AutoGridLayoutManager mAutoGridLayoutManager;
+
     public PageRecyclerView(Context context) {
         this(context, null);
     }
@@ -60,8 +62,9 @@ public class PageRecyclerView extends RecyclerView {
     // 默认初始化
     private void defaultInit(Context context) {
         this.mContext = context;
-        setLayoutManager(new AutoGridLayoutManager(
-                mContext, spanRow, AutoGridLayoutManager.HORIZONTAL, false));
+        this.mAutoGridLayoutManager = new AutoGridLayoutManager(
+                mContext, spanRow, AutoGridLayoutManager.HORIZONTAL, false);
+        setLayoutManager(mAutoGridLayoutManager);
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
@@ -74,8 +77,10 @@ public class PageRecyclerView extends RecyclerView {
     public void setPageSize(int spanRow, int spanColumn) {
         this.spanRow = spanRow <= 0 ? this.spanRow : spanRow;
         this.spanColumn = spanColumn <= 0 ? this.spanColumn : spanColumn;
-        setLayoutManager(new AutoGridLayoutManager(
-                mContext, this.spanRow, AutoGridLayoutManager.HORIZONTAL, false));
+
+        this.mAutoGridLayoutManager = new AutoGridLayoutManager(
+                mContext, this.spanRow, AutoGridLayoutManager.HORIZONTAL, false);
+        setLayoutManager(mAutoGridLayoutManager);
     }
 
     /**
@@ -124,6 +129,14 @@ public class PageRecyclerView extends RecyclerView {
             mIndicatorView.setSelectedPage(currentPage - 1);
             totalPage = temp;
         }
+
+        // 当页面为1时不显示指示器
+        if (totalPage > 1 ){
+            mIndicatorView.setVisibility(VISIBLE);
+        }else {
+            mIndicatorView.setVisibility(GONE);
+        }
+        mAutoGridLayoutManager.setTotalPages(temp);
     }
 
     @Override
