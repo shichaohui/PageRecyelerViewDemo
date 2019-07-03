@@ -1,6 +1,8 @@
 # PageRecyelerViewDemo
 横向分页的RecyclerView，带有页码指示器。
 
+**该项目有 bug，在此推荐一个实现该效果的项目：[pager-layoutmanager](https://github.com/GcsSloop/pager-layoutmanager)**
+
 ![效果图](http://img.blog.csdn.net/20150714202531487)
 
 **用法：**
